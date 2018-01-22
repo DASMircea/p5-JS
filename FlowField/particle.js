@@ -2,7 +2,7 @@ function Particle(){
     this.pos = createVector(random(width), random(height));
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
-    this.maxSpeed = 2;
+    this.maxSpeed = 1;
     this.previousPosition = this.pos.copy();
 }
 
@@ -19,12 +19,17 @@ Particle.prototype.applyForce = function(force){
 }
 
 Particle.prototype.show = function(){
+    var inc = 0.01
+    var n = noise(this.vel.heading(), this.vel.heading());
 
-    var r = map(this.vel.heading(), 0, PI, 0, 75);
-    var g = map(this.vel.heading(), 0, PI, 150, 255);
-    var b = map(this.vel.heading(), 0, PI, 60, 150);
+    var r = map(sin(n * PI * 24), -1, 1, 0, 255);
+    r = r + (0.5 * (255 - r));
+    var g = map(sin(n * PI * 12), -1, 1, 0, 255);
+    g = g + (0.5 * (255 - g));
+    var b = map(sin(n * PI * 6), -1, 1, 0, 255);
+    b = b + (0.5 * (255 - b));
 
-    stroke(r,g,b,20);
+    stroke(r, g, b, 5);
     strokeWeight(1);
     line(this.pos.x, this.pos.y, this.previousPosition.x, this.previousPosition.y);
 }

@@ -5,7 +5,7 @@ var xoff = 0;
 var yoff = 0;
 
 function setup() {
-    createCanvas(200, 200);
+    createCanvas(500, 500);
     pixelDensity(1);
 }
 
@@ -16,12 +16,16 @@ function draw() {
     for (let y = 0; y < height; y++) {
         xoff = 0;
         for (let x = 0; x < width; x++) {
-            var r = noise(xoff, yoff) * 255;
-            
+            var n = noise(xoff, yoff);
+
+            var r = map(sin(n * PI * 24), -1, 1, 0, 255) + 0.618033988749895 % 1; 
+            var g = map(sin(n * PI * 12), -1, 1, 0, 255) + 0.618033988749895 % 1;
+            var b = map(sin(n * PI * 6), -1, 1, 0, 255) + 0.618033988749895 % 1;
+
             var index = (x + y * width) * 4;
             pixels[index] = r;
-            pixels[index + 1] = r;
-            pixels[index + 2] = r;
+            pixels[index + 1] = g;
+            pixels[index + 2] = b;
             pixels[index + 3] = 255;
             xoff += inc;
         }
@@ -34,5 +38,5 @@ function draw() {
     // xoff += 0.01;
     // yoff += 0.01;
 
-    // noLoop();
+    noLoop();
 }
